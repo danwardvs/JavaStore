@@ -24,6 +24,9 @@ public class main {
 	int height = 600;
 	
 	private Texture background;
+	private Texture peanuts;
+	private Texture book;
+	private Texture movie;
 	
 	 /** The fonts to draw to the screen */
     private TrueTypeFont font;
@@ -47,7 +50,12 @@ public class main {
 	public void loadImage(){
 		try{
 		
-		background = TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("background.jpg"));
+		background = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("background.png"));
+		peanuts = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("peanuts.png"));
+		book = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("book.png"));
+		movie = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("movie.png"));
+
+		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -119,17 +127,17 @@ public class main {
 	    }
 	     
 	    public void drawTexture(Texture newTexture,int x, int y){
-	    	 background.bind(); // or GL11.glBind(texture.getTextureID());
+	    	 newTexture.bind(); // or GL11.glBind(texture.getTextureID());
 	            
 	    		GL11.glBegin(GL11.GL_QUADS);
 	    			GL11.glTexCoord2f(0,0);
 	    			GL11.glVertex2f(x,y);
 	    			GL11.glTexCoord2f(1,0);
-	    			GL11.glVertex2f(x+background.getTextureWidth(),y);
+	    			GL11.glVertex2f(x+newTexture.getTextureWidth(),y);
 	    			GL11.glTexCoord2f(1,1);
-	    			GL11.glVertex2f(x+background.getTextureWidth(),y+background.getTextureHeight());
+	    			GL11.glVertex2f(x+newTexture.getTextureWidth(),y+newTexture.getTextureHeight());
 	    			GL11.glTexCoord2f(0,1);
-	    			GL11.glVertex2f(x,y+background.getTextureHeight());
+	    			GL11.glVertex2f(x,y+newTexture.getTextureHeight());
 	    		GL11.glEnd();
 	    }
 		
@@ -182,7 +190,14 @@ public class main {
 	            
 	           
 	    		drawTexture(background,0,0);
-	    		font2.drawString(25,25, "Welcome to Danny's Assorted Goods Market!", Color.green);
+	    		drawTexture(peanuts,405,377);
+	    		drawTexture(book,510,395);
+	    		drawTexture(movie,575,387);
+	    		font2.drawString(150,320, "Welcome to Danny's Assorted Goods Market!", Color.black);
+	    		font2.drawString(400,470, "Peanuts    Book     Movie", Color.black);
+	    		font2.drawString(400,495, "$1.80/lb   $9.00    $14.99", Color.black);
+
+
 
 	            update(delta);
 	            
