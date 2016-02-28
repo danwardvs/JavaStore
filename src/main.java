@@ -6,9 +6,22 @@ import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import java.awt.Font;
+import java.io.InputStream;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.util.ResourceLoader;
+
+@SuppressWarnings("deprecation")
 public class main {
 	
+	 /** The fonts to draw to the screen */
+    private TrueTypeFont font;
+    private TrueTypeFont font2;
+     
+    /** Boolean flag on whether AntiAliasing is enabled or not */
+    private boolean antiAlias = true;
 	
 	int mouse_x;
 	int mouse_y;
@@ -21,6 +34,16 @@ public class main {
 	int fps;
 	/** last fps time */
 	long lastFPS;
+	
+	public void loadFont(){
+		
+		 // load a default java font
+        Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
+        font = new TrueTypeFont(awtFont, antiAlias);
+		
+		 // load font from file
+       
+	}
 	
 	 public void updateFPS() {
 	        if (getTime() - lastFPS > 1000) {
@@ -70,7 +93,8 @@ public class main {
 	     
 	    
 		
-	    public void start() {
+	    @SuppressWarnings("deprecation")
+		public void start() {
 	    	
 	        try {
 	        Display.setDisplayMode(new DisplayMode(900,500));
@@ -96,6 +120,8 @@ public class main {
 	            // Clear the screen and depth buffer
 	            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);  
 	            
+	            Color.white.bind();
+	            //font.drawString(100, 100, "NICE LOOKING FONTS!", Color.yellow);
 
 	            update(delta);
 	            
