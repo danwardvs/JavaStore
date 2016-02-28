@@ -8,7 +8,11 @@ import org.lwjgl.input.Mouse;
 
 import java.awt.Font;
 import java.io.InputStream;
+import java.io.IOException;
 
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
+import org.newdawn.slick.util.ResourceLoader;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
@@ -18,6 +22,8 @@ public class main {
 	
 	int width = 800;
 	int height = 600;
+	
+	private Texture background;
 	
 	 /** The fonts to draw to the screen */
     private TrueTypeFont font;
@@ -37,6 +43,15 @@ public class main {
 	int fps;
 	/** last fps time */
 	long lastFPS;
+	
+	public void loadImage(){
+		try{
+		
+		background = TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("background.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void loadFont(){
 		
@@ -140,6 +155,8 @@ public class main {
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
 	        
 	        loadFont();
+	        loadImage();
+			
 	        
 	        while (!Display.isCloseRequested()) {
 	        	int delta = getDelta();
@@ -148,8 +165,22 @@ public class main {
 	            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);  
 	            
 	        
-	            font2.drawString(25,25, "Welcome to Danny's Assorted Goods Market!", Color.green);
-
+	            
+	            
+	            background.bind(); // or GL11.glBind(texture.getTextureID());
+	            
+	    		GL11.glBegin(GL11.GL_QUADS);
+	    			GL11.glTexCoord2f(0,0);
+	    			GL11.glVertex2f(0,0);
+	    			GL11.glTexCoord2f(1,0);
+	    			GL11.glVertex2f(background.getTextureWidth(),0);
+	    			GL11.glTexCoord2f(1,1);
+	    			GL11.glVertex2f(100+background.getTextureWidth(),background.getTextureHeight());
+	    			GL11.glTexCoord2f(0,1);
+	    			GL11.glVertex2f(0,background.getTextureHeight());
+	    		GL11.glEnd();
+	    		
+	    		//font2.drawString(25,25, "Welcome to Danny's Assorted Goods Market!", Color.green);
 
 	            update(delta);
 	            
