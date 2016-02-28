@@ -118,7 +118,20 @@ public class main {
 	        updateFPS(); // update FPS Counter
 	    }
 	     
-	    
+	    public void drawTexture(Texture newTexture,int x, int y){
+	    	 background.bind(); // or GL11.glBind(texture.getTextureID());
+	            
+	    		GL11.glBegin(GL11.GL_QUADS);
+	    			GL11.glTexCoord2f(0,0);
+	    			GL11.glVertex2f(x,y);
+	    			GL11.glTexCoord2f(1,0);
+	    			GL11.glVertex2f(x+background.getTextureWidth(),y);
+	    			GL11.glTexCoord2f(1,1);
+	    			GL11.glVertex2f(x+background.getTextureWidth(),y+background.getTextureHeight());
+	    			GL11.glTexCoord2f(0,1);
+	    			GL11.glVertex2f(x,y+background.getTextureHeight());
+	    		GL11.glEnd();
+	    }
 		
 	    @SuppressWarnings("deprecation")
 		public void start() {
@@ -164,23 +177,12 @@ public class main {
 	            // Clear the screen and depth buffer
 	            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);  
 	            
-	        
+	            Color.white.bind();
 	            
 	            
-	            background.bind(); // or GL11.glBind(texture.getTextureID());
-	            
-	    		GL11.glBegin(GL11.GL_QUADS);
-	    			GL11.glTexCoord2f(0,0);
-	    			GL11.glVertex2f(0,0);
-	    			GL11.glTexCoord2f(1,0);
-	    			GL11.glVertex2f(background.getTextureWidth(),0);
-	    			GL11.glTexCoord2f(1,1);
-	    			GL11.glVertex2f(100+background.getTextureWidth(),background.getTextureHeight());
-	    			GL11.glTexCoord2f(0,1);
-	    			GL11.glVertex2f(0,background.getTextureHeight());
-	    		GL11.glEnd();
-	    		
-	    		//font2.drawString(25,25, "Welcome to Danny's Assorted Goods Market!", Color.green);
+	           
+	    		drawTexture(background,0,0);
+	    		font2.drawString(25,25, "Welcome to Danny's Assorted Goods Market!", Color.green);
 
 	            update(delta);
 	            
