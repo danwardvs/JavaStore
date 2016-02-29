@@ -22,8 +22,16 @@ public class main {
 	
 	boolean exit_store;
 	
+	float final_total;
+	
+	float peanuts_amount;
+	int book_amount;
+	int movie_amount;
+	
 	int width = 800;
 	int height = 600;
+	
+	int click_delay;
 	
 	private Texture background;
 	private Texture peanuts;
@@ -130,17 +138,33 @@ public class main {
 	    	mouse_x = Mouse.getX(); // will return the X coordinate on the Display.
 	    	mouse_y = Mouse.getY(); // will return the Y coordinate on the Display.
 
-	    	mouse_y=Math.abs(mouse_y-600);
+	    	mouse_y=600-mouse_y;
 	    	
 	    	leftButtonDown = Mouse.isButtonDown(0);
 	    	
 	    	
 	    	if(location_clicked(160,300,380,600))
 	    		exit_store=true;
+	    	if(location_clicked(400,500,360,460) && click_delay>9){
+	    		click_delay=0;
+	    		peanuts_amount+=0.1;
+	    	}
+	    	if(location_clicked(500,600,360,460) && click_delay>9){
+	    		click_delay=0;
+	    		book_amount++;
+	    	}
+	    		
+	    	if(location_clicked(600,700,360,460) && click_delay>9){
+	    		click_delay=0;
+	    		movie_amount++;
+	    	}
+	    	final_total = ((0.5f*peanuts_amount)+(1.8f*peanuts_amount))+((1.03f*book_amount)+(book_amount*9))+((0.05f*movie_amount)+(movie_amount*14.99f));
+	    		
 	    	
-	    	System.out.println(mouse_x);
-	    	System.out.println(mouse_y);
-	        
+	    	click_delay++;	
+	    		
+	    	
+	    
 	         
 	        updateFPS(); // update FPS Counter
 	    }
@@ -217,9 +241,11 @@ public class main {
 	    		font2.drawString(150,320, "Welcome to Danny's Assorted Goods Market!", Color.black);
 	    		font2.drawString(400,470, "Peanuts    Book     Movie", Color.black);
 	    		font2.drawString(400,495, "$1.80/lb   $9.00    $14.99", Color.black);
-
-
-
+	    		font2.drawString(360,520, "Qty: " + String.format("%.1f",peanuts_amount) + " lb", Color.black);
+	    		font2.drawString(520,520, book_amount + "", Color.black);
+	    		font2.drawString(604,520, movie_amount + "", Color.black);
+	    		font2.drawString(360,545, "Total: $" + String.format("%.2f",final_total), Color.red);
+	    		
 	            update(delta);
 	            
 	            Display.update();
