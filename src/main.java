@@ -20,6 +20,8 @@ import org.newdawn.slick.util.ResourceLoader;
 @SuppressWarnings("deprecation")
 public class main {
 	
+	boolean exit_store;
+	
 	int width = 800;
 	int height = 600;
 	
@@ -46,6 +48,13 @@ public class main {
 	int fps;
 	/** last fps time */
 	long lastFPS;
+	
+	public boolean location_clicked(int min_x,int max_x,int min_y,int max_y){
+	    if(mouse_x>min_x && mouse_x<max_x && mouse_y>min_y && mouse_y<max_y && leftButtonDown)
+	        return true;
+	    else return false;
+	}
+
 	
 	public void loadImage(){
 		try{
@@ -120,7 +129,17 @@ public class main {
 	       
 	    	mouse_x = Mouse.getX(); // will return the X coordinate on the Display.
 	    	mouse_y = Mouse.getY(); // will return the Y coordinate on the Display.
+
+	    	mouse_y=Math.abs(mouse_y-600);
+	    	
 	    	leftButtonDown = Mouse.isButtonDown(0);
+	    	
+	    	
+	    	if(location_clicked(160,300,380,600))
+	    		exit_store=true;
+	    	
+	    	System.out.println(mouse_x);
+	    	System.out.println(mouse_y);
 	        
 	         
 	        updateFPS(); // update FPS Counter
@@ -179,8 +198,9 @@ public class main {
 	        loadImage();
 			
 	        
-	        while (!Display.isCloseRequested()) {
+	        while (!Display.isCloseRequested() && !exit_store) {
 	        	int delta = getDelta();
+	        	
 	        	
 	            // Clear the screen and depth buffer
 	            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);  
@@ -193,6 +213,7 @@ public class main {
 	    		drawTexture(peanuts,405,377);
 	    		drawTexture(book,510,395);
 	    		drawTexture(movie,575,387);
+	    		font2.drawString(210,520, "Exit", Color.black);
 	    		font2.drawString(150,320, "Welcome to Danny's Assorted Goods Market!", Color.black);
 	    		font2.drawString(400,470, "Peanuts    Book     Movie", Color.black);
 	    		font2.drawString(400,495, "$1.80/lb   $9.00    $14.99", Color.black);
