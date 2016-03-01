@@ -39,7 +39,6 @@ public class main {
 	private Texture movie;
 	
 	 /** The fonts to draw to the screen */
-    private TrueTypeFont font;
     private TrueTypeFont font2;
      
     /** Boolean flag on whether AntiAliasing is enabled or not */
@@ -48,6 +47,7 @@ public class main {
 	int mouse_x;
 	int mouse_y;
 	boolean leftButtonDown;
+	boolean rightButtonDown;
 
 	 /** time at last frame */
 	long lastFrame;
@@ -67,10 +67,10 @@ public class main {
 	public void loadImage(){
 		try{
 		
-		background = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("background.png"));
-		peanuts = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("peanuts.png"));
-		book = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("book.png"));
-		movie = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("movie.png"));
+			background = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("background.png"));
+			peanuts = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("peanuts.png"));
+			book = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("book.png"));
+			movie = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("movie.png"));
 
 		
 		} catch (IOException e) {
@@ -79,10 +79,6 @@ public class main {
 	}
 	
 	public void loadFont(){
-		
-		 // load a default java font
-        Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
-        font = new TrueTypeFont(awtFont, antiAlias);
 		
 		 // load font from file
         try {
@@ -97,14 +93,14 @@ public class main {
         }
 	}
 	
-	 public void updateFPS() {
-	        if (getTime() - lastFPS > 1000) {
-	            Display.setTitle("FPS: " + fps);
-	            fps = 0;
-	             lastFPS += 1000;
-	          }
-	          fps++;
-	     }
+	public void updateFPS() {
+	    if (getTime() - lastFPS > 1000) {
+	    	Display.setTitle("FPS: " + fps);
+	        fps = 0;
+	        lastFPS += 1000;
+	    }
+	    fps++;
+	}
 	    public int getDelta() {
 	        long time = getTime();
 	        int delta = (int) (time - lastFrame);
@@ -122,17 +118,6 @@ public class main {
 	        return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	    }
 	    
-	    public static float find_angle(float x_1, float y_1, float x_2, float y_2){
-	        float tan_1;
-	        float tan_2;
-
-	        tan_1=y_1-y_2;
-	        tan_2=x_1-x_2;
-
-	        return (float)Math.atan2(tan_1,tan_2);
-	    }
-
-	    
 	    public void update(int delta) {
 	       
 	    	mouse_x = Mouse.getX(); // will return the X coordinate on the Display.
@@ -141,6 +126,7 @@ public class main {
 	    	mouse_y=600-mouse_y;
 	    	
 	    	leftButtonDown = Mouse.isButtonDown(0);
+	    	rightButtonDown = Mouse.isButtonDown(1);
 	    	
 	    	
 	    	if(location_clicked(160,300,380,600))
@@ -158,6 +144,22 @@ public class main {
 	    		click_delay=0;
 	    		movie_amount++;
 	    	}
+	    	
+	    	if(location_clicked(400,500,360,460) && click_delay>9){
+	    		click_delay=0;
+	    		peanuts_amount+=0.1;
+	    	}
+	    	if(location_clicked(500,600,360,460) && click_delay>9){
+	    		click_delay=0;
+	    		book_amount++;
+	    	}
+	    		
+	    	if(location_clicked(600,700,360,460) && click_delay>9){
+	    		click_delay=0;
+	    		movie_amount++;
+	    	}
+	    	
+	    	
 	    	final_total = ((0.5f*peanuts_amount)+(1.8f*peanuts_amount))+((1.03f*book_amount)+(book_amount*9))+((0.05f*movie_amount)+(movie_amount*14.99f));
 	    		
 	    	
