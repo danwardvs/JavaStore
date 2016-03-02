@@ -48,7 +48,6 @@ public class item {
 		
 		if(location_clicked(x,x+texture.getImageWidth(),y,y+texture.getImageHeight())){
 			click_delay=0;
-			System.out.println(texture.getImageWidth());
 			return increment;
 			
 			
