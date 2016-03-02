@@ -3,6 +3,7 @@ import org.newdawn.slick.opengl.Texture;
 
 public class item {
 	
+	// Initialize item variables
 	int x;
 	int y;
 	int mouse_x;
@@ -14,7 +15,9 @@ public class item {
 	
 	private Texture texture;
 	
+	// Get mouse data from main
 	public void setMouseValues(int newMouseX, int newMouseY, boolean newLeftButtonDown, boolean newRightButtonDown){
+		
 		mouse_x = newMouseX;
 		mouse_y = newMouseY;
 		leftButtonDown = newLeftButtonDown;
@@ -23,6 +26,7 @@ public class item {
 		//MY NAME ISDANNYIM POROOFUSSINULL PROWGRAMMAR
 	}
 	
+	// Constructor
 	public item(int newX, int newY, double newIncrement, Texture newTexture){
 		x = newX;
 		y = newY;
@@ -30,18 +34,21 @@ public class item {
 		texture = newTexture;
 	}
 	
+	// Checks if area was left clicked
 	public boolean location_clicked(int min_x,int max_x,int min_y,int max_y){
 	    if(mouse_x>min_x && mouse_x<max_x && mouse_y>min_y && mouse_y<max_y && leftButtonDown && click_delay>9)
 	        return true;
 	    else return false;
 	}
 	
+	// Check if area was right clicked
 	public boolean location_right_clicked(int min_x,int max_x,int min_y,int max_y){
 	    if(mouse_x>min_x && mouse_x<max_x && mouse_y>min_y && mouse_y<max_y && rightButtonDown && click_delay>9)
 	        return true;
 	    else return false;
 	}
 	
+	// Check for clicks and add the increment or negative increment
 	public double update(){
 		
 		click_delay++;
@@ -64,9 +71,10 @@ public class item {
 		
 	}
 	
+	// Draws the texture to the screen
 	public void drawTexture(){
 	
-	   texture.bind(); // or GL11.glBind(texture.getTextureID());
+	   texture.bind();
 	            
 	   GL11.glBegin(GL11.GL_QUADS);
 	   		GL11.glTexCoord2f(0,0);

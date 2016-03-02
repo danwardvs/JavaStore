@@ -221,10 +221,9 @@ public class main {
 	        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);  
 	        
 	        // Sets screen color to white AKA no color
-	        Color.red.bind();
-	            
-	            
-	           
+	        Color.white.bind();
+	        
+	        // Draw everything to the screen
 	        drawTexture(background,0,0);
 	        peanuts.drawTexture();
 	        book.drawTexture();
@@ -245,12 +244,16 @@ public class main {
 	    	font2.drawString(604,520, movie_amount + "", Color.black);
 	    	font2.drawString(360,545, "Total: $" + String.format("%.2f",final_total), Color.red);
 	    		
-	    		
-	            
+	    	// Run the update loop to get mouse information and exit status
 	    	update(delta);
-	    		
+	    	
+	    	// With the new mouse information, we send it to the item object
 	    	peanuts.setMouseValues(mouse_x, mouse_y, leftButtonDown, rightButtonDown);
+	    	
+	    	// item.update checks for mouse clicks, and returns the amount changed
 	    	peanuts_amount+=peanuts.update();
+	    	
+	    	// No negative values for what is bought
 	    	if(peanuts_amount<0.0)peanuts_amount=0.0f;
 	    		
 	    	book.setMouseValues(mouse_x, mouse_y, leftButtonDown, rightButtonDown);
@@ -260,20 +263,23 @@ public class main {
 	    	movie.setMouseValues(mouse_x, mouse_y, leftButtonDown, rightButtonDown);
 	    	movie_amount+=movie.update();
 	    	if(movie_amount<0.0)movie_amount=0;
-	    		
+	    	
 	    	Display.update();
-	            
+	        
+	    	// Keeps the display from going above 60 FPS
 	        Display.sync(60);
 	            
-	        }
-	        Display.destroy();
+	    }
+	    	
+	    // Destroy the display when the program ends
+	    Display.destroy();
 	        
 	    }
-
+	
+	// Create a new main and run it
 	public static void main(String[] args) {
 		main MyMain = new main();
 		MyMain.start();
-		// TODO Auto-generated method stub
 		
 	}
 
