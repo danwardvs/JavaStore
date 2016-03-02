@@ -34,9 +34,6 @@ public class main {
 	int click_delay;
 	
 	private Texture background;
-	private Texture peanuts;
-	private Texture book;
-	private Texture movie;
 	
 	 /** The fonts to draw to the screen */
     private TrueTypeFont font2;
@@ -57,20 +54,27 @@ public class main {
 	/** last fps time */
 	long lastFPS;
 	
+	item peanuts;
+	item book;
+	item movie;
+	
+	
 	public boolean location_clicked(int min_x,int max_x,int min_y,int max_y){
 	    if(mouse_x>min_x && mouse_x<max_x && mouse_y>min_y && mouse_y<max_y && leftButtonDown)
 	        return true;
 	    else return false;
 	}
-
+	
 	
 	public void loadImage(){
 		try{
 		
 			background = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("background.png"));
-			peanuts = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("peanuts.png"));
-			book = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("book.png"));
-			movie = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("movie.png"));
+			
+			peanuts = new item(405,377,0.1,TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("peanuts.png")));
+			book = new item(510,395,1,TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("book.png")));
+			movie = new item(575,387,1,TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("movie.png")));
+			
 
 		
 		} catch (IOException e) {
@@ -131,35 +135,8 @@ public class main {
 	    	
 	    	if(location_clicked(160,300,380,600))
 	    		exit_store=true;
-	    	if(location_clicked(400,500,360,460) && click_delay>9){
-	    		click_delay=0;
-	    		peanuts_amount+=0.1;
-	    	}
-	    	if(location_clicked(500,600,360,460) && click_delay>9){
-	    		click_delay=0;
-	    		book_amount++;
-	    	}
-	    		
-	    	if(location_clicked(600,700,360,460) && click_delay>9){
-	    		click_delay=0;
-	    		movie_amount++;
-	    	}
-	    	
-	    	if(location_clicked(400,500,360,460) && click_delay>9){
-	    		click_delay=0;
-	    		peanuts_amount+=0.1;
-	    	}
-	    	if(location_clicked(500,600,360,460) && click_delay>9){
-	    		click_delay=0;
-	    		book_amount++;
-	    	}
-	    		
-	    	if(location_clicked(600,700,360,460) && click_delay>9){
-	    		click_delay=0;
-	    		movie_amount++;
-	    	}
-	    	
-	    	
+	    
+
 	    	final_total = ((0.5f*peanuts_amount)+(1.8f*peanuts_amount))+((1.03f*book_amount)+(book_amount*9))+((0.05f*movie_amount)+(movie_amount*14.99f));
 	    		
 	    	
@@ -236,9 +213,10 @@ public class main {
 	            
 	           
 	    		drawTexture(background,0,0);
-	    		drawTexture(peanuts,405,377);
-	    		drawTexture(book,510,395);
-	    		drawTexture(movie,575,387);
+	    		peanuts.drawTexture();
+	    		book.drawTexture();
+	    		movie.drawTexture();
+	    		
 	    		font2.drawString(210,520, "Exit", Color.black);
 	    		font2.drawString(150,320, "Welcome to Danny's Assorted Goods Market!", Color.black);
 	    		font2.drawString(400,470, "Peanuts    Book     Movie", Color.black);
@@ -248,7 +226,24 @@ public class main {
 	    		font2.drawString(604,520, movie_amount + "", Color.black);
 	    		font2.drawString(360,545, "Total: $" + String.format("%.2f",final_total), Color.red);
 	    		
-	            update(delta);
+	    		
+	            
+	    		update(delta);
+	    		
+	    		peanuts.setMouseValues(mouse_x, mouse_y, leftButtonDown, rightButtonDown);
+	    		peanuts_amount+=peanuts.update();
+	    		if(peanuts_amount<0.0)peanuts_amount=0.0f;
+	    		
+	    		book.setMouseValues(mouse_x, mouse_y, leftButtonDown, rightButtonDown);
+	    		book_amount+=book.update();
+	    		if(book_amount<0.0)book_amount=0;
+	    		
+	    		movie.setMouseValues(mouse_x, mouse_y, leftButtonDown, rightButtonDown);
+	    		movie_amount+=movie.update();
+	    		if(movie_amount<0.0)movie_amount=0;
+	    		
+	    		
+	            
 	            
 	            Display.update();
 	            

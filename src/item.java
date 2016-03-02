@@ -7,6 +7,8 @@ public class item {
 	int y;
 	int mouse_x;
 	int mouse_y;
+	int click_delay;
+	double increment;
 	boolean leftButtonDown;
 	boolean rightButtonDown;
 	
@@ -21,23 +23,47 @@ public class item {
 		//MY NAME ISDANNYIM POROOFUSSINULL PROWGRAMMAR
 	}
 	
-	public void item(int newX, int newY,Texture newTexture){
+	public item(int newX, int newY, double newIncrement, Texture newTexture){
 		x = newX;
 		y = newY;
+		increment = newIncrement;
 		texture = newTexture;
 	}
 	
 	public boolean location_clicked(int min_x,int max_x,int min_y,int max_y){
-	    if(mouse_x>min_x && mouse_x<max_x && mouse_y>min_y && mouse_y<max_y && leftButtonDown)
+	    if(mouse_x>min_x && mouse_x<max_x && mouse_y>min_y && mouse_y<max_y && leftButtonDown && click_delay>9)
 	        return true;
 	    else return false;
 	}
 	
-	public void update(){
-
+	public boolean location_right_clicked(int min_x,int max_x,int min_y,int max_y){
+	    if(mouse_x>min_x && mouse_x<max_x && mouse_y>min_y && mouse_y<max_y && rightButtonDown && click_delay>9)
+	        return true;
+	    else return false;
 	}
 	
-	public void draw(){
+	public double update(){
+		
+		click_delay++;
+		
+		if(location_clicked(x,x+texture.getTextureWidth(),y,y+texture.getTextureHeight())){
+			click_delay=0;
+			return increment;
+			
+		}
+		else if(location_right_clicked(x,x+texture.getTextureWidth(),y,y+texture.getTextureHeight())){
+			click_delay=0;
+			return -increment;
+			
+		}
+		else
+			return 0.0;
+		
+		
+		
+	}
+	
+	public void drawTexture(){
 	
 	   texture.bind(); // or GL11.glBind(texture.getTextureID());
 	            
