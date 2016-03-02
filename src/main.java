@@ -28,6 +28,15 @@ public class main {
 	int book_amount;
 	int movie_amount;
 	
+	final float PEANUTS_PRICE = 1.8f;
+	final float BOOK_PRICE = 9f;
+	final float MOVIE_PRICE = 14.99f;
+	
+	final float PEANUTS_SHIPPING_PRICE = 0.5f;
+	final float MOVIE_SHIPPING_PERCENTAGE = 5;
+	final float BOOK_SHIPPING_PRICE = 1.03f;
+	
+	
 	int width = 800;
 	int height = 600;
 	
@@ -137,7 +146,7 @@ public class main {
 	    		exit_store=true;
 	    
 
-	    	final_total = ((0.5f*peanuts_amount)+(1.8f*peanuts_amount))+((1.03f*book_amount)+(book_amount*9))+((0.05f*movie_amount)+(movie_amount*14.99f));
+	    	final_total = ((PEANUTS_SHIPPING_PRICE*peanuts_amount)+(PEANUTS_PRICE*peanuts_amount))+((BOOK_SHIPPING_PRICE*book_amount)+(book_amount*BOOK_PRICE))+(((MOVIE_SHIPPING_PERCENTAGE/100)*(movie_amount*MOVIE_PRICE))+(movie_amount*MOVIE_PRICE));
 	    		
 	    	
 	    	click_delay++;	
