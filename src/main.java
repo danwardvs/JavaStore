@@ -217,6 +217,12 @@ public class main {
 	    		book.drawTexture();
 	    		movie.drawTexture();
 	    		
+	    		font2.drawString(690,360, "Left click", Color.blue);
+	    		font2.drawString(690,385, "to buy", Color.blue);
+	    		
+	    		font2.drawString(690,420, "Right click", Color.blue);
+	    		font2.drawString(690,445, "to return", Color.blue);
+
 	    		font2.drawString(210,520, "Exit", Color.black);
 	    		font2.drawString(150,320, "Welcome to Danny's Assorted Goods Market!", Color.black);
 	    		font2.drawString(400,470, "Peanuts    Book     Movie", Color.black);
