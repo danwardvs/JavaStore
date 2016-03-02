@@ -46,12 +46,14 @@ public class item {
 		
 		click_delay++;
 		
-		if(location_clicked(x,x+texture.getTextureWidth(),y,y+texture.getTextureHeight())){
+		if(location_clicked(x,x+texture.getImageWidth(),y,y+texture.getImageHeight())){
 			click_delay=0;
+			System.out.println(texture.getImageWidth());
 			return increment;
 			
+			
 		}
-		else if(location_right_clicked(x,x+texture.getTextureWidth(),y,y+texture.getTextureHeight())){
+		else if(location_right_clicked(x,x+texture.getImageWidth(),y,y+texture.getImageHeight())){
 			click_delay=0;
 			return -increment;
 			
